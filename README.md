@@ -224,6 +224,6 @@ Active: 2/125 (2%) -- clean
 
 *Built on ESP32 + nRF24L01 + ILI9341 · Bengaluru, India · 2025*
 
-*AI collaboration: Claude Sonnet 4.6 (Anthropic) · Gemini 2.5 Pro (Google)*
+*AI collaboration: Claude Sonnet 4.6 (Anthropic) · Gemini 3.1 Pro (Google)*
 
 </div>
