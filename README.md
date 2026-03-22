@@ -216,13 +216,13 @@ Active: 2/125 (2%) -- clean
 
 > Passive device only. WatchDog 2.4 does not transmit any radio signal. Designed for legitimate security research and education.
 
-*© 2025 Anirudh N.S. — Personal cybersecurity portfolio project. Built for learning and demonstration purposes.*
+*© 2026 Anirudh N.S. — Personal cybersecurity portfolio project. Built for learning and demonstration purposes.*
 
 ---
 
 <div align="center">
 
-*Built on ESP32 + nRF24L01 + ILI9341 · Bengaluru, India · 2025*
+*Built on ESP32 + nRF24L01 + ILI9341 · Bengaluru, India · 2026*
 
 *AI-assisted development: Claude Sonnet 4.6 (Anthropic) · Gemini 3.1 Pro (Google)*
 
