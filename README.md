@@ -15,7 +15,7 @@
 [![Version](https://img.shields.io/badge/version-v3.1%20ENGINEERING%20HARDENED-1e82ff?style=for-the-badge&logo=arduino)](.)
 [![Platform](https://img.shields.io/badge/platform-ESP32-orange?style=for-the-badge&logo=espressif)](.)
 [![Status](https://img.shields.io/badge/status-Production%20%7C%20Hardware%20Tested-22cc66?style=for-the-badge)](.)
-[![Project](https://img.shields.io/badge/type-Personal%20Portfolio%20Project-grey?style=for-the-badge)](.)
+[![Project](https://img.shields.io/badge/type-Personal%20Project-grey?style=for-the-badge)](.)
 
 *Real-time RF jammer detection · WiFi scanning · BLE tracker identification · Wireless IDS*
 
