@@ -1,4 +1,3 @@
-
 <div align="center">
 <pre>
 ██╗    ██╗ █████╗ ████████╗ ██████╗██╗  ██╗██████╗  ██████╗  ██████╗
@@ -8,6 +7,7 @@
 ╚███╔███╔╝██║  ██║   ██║   ╚██████╗██║  ██║██████╔╝╚██████╔╝╚██████╔╝
  ╚══╝╚══╝ ╚═╝  ╚═╝   ╚═╝    ╚═════╝╚═╝  ╚═╝╚═════╝  ╚═════╝  ╚═════╝
 </pre>
+
 # WatchDog 2.4
 
 **Portable 2.4 GHz Wireless Security Analyser**
@@ -15,7 +15,7 @@
 [![Version](https://img.shields.io/badge/version-v3.1%20ENGINEERING%20HARDENED-1e82ff?style=for-the-badge&logo=arduino)](.)
 [![Platform](https://img.shields.io/badge/platform-ESP32-orange?style=for-the-badge&logo=espressif)](.)
 [![Status](https://img.shields.io/badge/status-Production%20%7C%20Hardware%20Tested-22cc66?style=for-the-badge)](.)
-[![License](https://img.shields.io/badge/license-Closed%20Source-red?style=for-the-badge)](.)
+[![Project](https://img.shields.io/badge/type-Personal%20Portfolio%20Project-grey?style=for-the-badge)](.)
 
 *Real-time RF jammer detection · WiFi scanning · BLE tracker identification · Wireless IDS*
 
@@ -216,7 +216,7 @@ Active: 2/125 (2%) -- clean
 
 > Passive device only. WatchDog 2.4 does not transmit any radio signal. Designed for legitimate security research and education.
 
-**Copyright © 2025 Anirudh N.S. All rights reserved. Closed source — no licence granted. Unauthorised copying or redistribution is strictly prohibited.**
+*© 2025 Anirudh N.S. — Personal cybersecurity portfolio project. Built for learning and demonstration purposes.*
 
 ---
 
@@ -224,6 +224,6 @@ Active: 2/125 (2%) -- clean
 
 *Built on ESP32 + nRF24L01 + ILI9341 · Bengaluru, India · 2025*
 
-*AI collaboration: Claude Sonnet 4.6 (Anthropic) · Gemini 3.1 Pro (Google)*
+*AI-assisted development: Claude Sonnet 4.6 (Anthropic) · Gemini 3.1 Pro (Google)*
 
 </div>
