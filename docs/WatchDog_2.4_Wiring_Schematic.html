@@ -2,469 +2,727 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>WatchDog 2.4 — Wiring Schematic</title>
+<title>WatchDog 2.4 — Wiring Reference</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root {
+    --bg:       #0d1117;
+    --surface:  #161b22;
+    --border:   #21262d;
+    --blue:     #1e82ff;
+    --green:    #3fb950;
+    --yellow:   #d29922;
+    --orange:   #f78166;
+    --red:      #ff5555;
+    --purple:   #bc8cff;
+    --text:     #e6edf3;
+    --muted:    #7d8590;
+    --mono:     'JetBrains Mono', monospace;
+    --sans:     'Inter', sans-serif;
+  }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
+
   body {
-    background: #0a0c10;
-    font-family: 'Share Tech Mono', monospace;
-    color: #e0e8ff;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 24px 16px 40px;
+    padding: 40px 24px 60px;
+    max-width: 960px;
+    margin: 0 auto;
   }
-  .header {
+
+  /* ── Header ─────────────────────────────── */
+  .page-header {
     text-align: center;
-    margin-bottom: 24px;
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
   }
-  .header h1 {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 2.2rem;
+  .page-header h1 {
+    font-family: var(--mono);
+    font-size: 2rem;
     font-weight: 700;
-    color: #1e82ff;
-    letter-spacing: 4px;
+    color: var(--blue);
+    letter-spacing: 3px;
+  }
+  .page-header p {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 6px;
+    letter-spacing: 1.5px;
+  }
+  .badge-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid;
+  }
+  .badge-blue   { color: var(--blue);   border-color: var(--blue);   background: #1e82ff18; }
+  .badge-green  { color: var(--green);  border-color: var(--green);  background: #3fb95018; }
+  .badge-yellow { color: var(--yellow); border-color: var(--yellow); background: #d2992218; }
+
+  /* ── Block Diagram ───────────────────────── */
+  .block-diagram {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+  .block-diagram h2 {
+    font-size: 0.75rem;
+    font-family: var(--mono);
+    color: var(--muted);
+    letter-spacing: 2px;
+    margin-bottom: 24px;
     text-transform: uppercase;
   }
-  .header p {
-    font-size: 0.75rem;
-    color: #5a6a8a;
-    letter-spacing: 2px;
-    margin-top: 4px;
-  }
-  .schematic-container {
-    width: 100%;
-    max-width: 1100px;
-    background: #0d1117;
-    border: 1px solid #1e82ff33;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 0 40px #1e82ff18;
-    overflow-x: auto;
-  }
-  svg {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-  .legend {
-    max-width: 1100px;
-    width: 100%;
-    margin-top: 20px;
+  .diagram-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 12px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 16px 32px;
+    align-items: center;
+    justify-items: center;
   }
-  .legend-item {
-    background: #0d1117;
-    border: 1px solid #1e3a5f;
+  .block {
+    border: 2px solid;
+    border-radius: 8px;
+    padding: 12px 16px;
+    min-width: 140px;
+    text-align: center;
+    position: relative;
+  }
+  .block-label {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .block-sub {
+    font-size: 0.68rem;
+    color: var(--muted);
+    margin-top: 3px;
+    line-height: 1.4;
+  }
+  .b-esp   { border-color: var(--blue);   background: #1e82ff0d; }
+  .b-rf    { border-color: var(--green);  background: #3fb9500d; }
+  .b-tft   { border-color: var(--blue);   background: #1e82ff0d; }
+  .b-pwr   { border-color: var(--yellow); background: #d299220d; }
+  .b-lipo  { border-color: var(--orange); background: #f781660d; }
+  .b-buzz  { border-color: var(--purple); background: #bc8cff0d; }
+  .b-sw    { border-color: var(--yellow); background: #d299220d; }
+
+  .label-esp   { color: var(--blue);   }
+  .label-rf    { color: var(--green);  }
+  .label-tft   { color: var(--blue);   }
+  .label-pwr   { color: var(--yellow); }
+  .label-lipo  { color: var(--orange); }
+  .label-buzz  { color: var(--purple); }
+  .label-sw    { color: var(--yellow); }
+
+  .arrow {
+    font-size: 1.2rem;
+    color: var(--muted);
+    line-height: 1;
+  }
+  .esp-center { grid-column: 2; grid-row: 2; }
+  .spi-note {
+    grid-column: 1 / 4;
+    grid-row: 3;
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-family: var(--mono);
+    background: #1e82ff0a;
+    border: 1px solid #1e82ff22;
     border-radius: 6px;
-    padding: 10px 14px;
+    padding: 8px 16px;
+  }
+  .spi-note span { color: var(--blue); }
+
+  /* ── Section ─────────────────────────────── */
+  .section {
+    margin-bottom: 28px;
+  }
+  .section-header {
     display: flex;
     align-items: center;
     gap: 10px;
+    margin-bottom: 12px;
   }
-  .legend-dot {
-    width: 12px; height: 12px;
+  .section-dot {
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     flex-shrink: 0;
   }
-  .legend-text { font-size: 0.72rem; color: #8899bb; line-height: 1.5; }
-  .legend-text strong { color: #c0d4ff; display: block; font-size: 0.75rem; }
-  .note {
-    max-width: 1100px;
-    width: 100%;
-    margin-top: 16px;
-    background: #120a0a;
-    border: 1px solid #cc3333aa;
-    border-radius: 6px;
-    padding: 12px 16px;
-    font-size: 0.72rem;
-    color: #cc8888;
-    line-height: 1.7;
+  .section-header h2 {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
   }
-  .note strong { color: #ff5555; }
+  .section-header span {
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+
+  /* ── Pin Table ───────────────────────────── */
+  .pin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 0.85rem;
+  }
+  .pin-table thead tr {
+    background: #1a1f27;
+  }
+  .pin-table th {
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 0.7rem;
+    font-family: var(--mono);
+    color: var(--muted);
+    letter-spacing: 1px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+  }
+  .pin-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+  .pin-table tr:last-child td { border-bottom: none; }
+  .pin-table tr:hover td { background: #1e82ff08; }
+
+  .gpio  { color: var(--blue);   font-weight: 600; }
+  .pin   { color: var(--text);   }
+  .dest  { color: var(--muted);  }
+  .note-cell { color: var(--muted); font-size: 0.75rem; }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    vertical-align: middle;
+  }
+  .tag-spi    { background: #1e82ff22; color: var(--blue); }
+  .tag-ctrl   { background: #3fb95022; color: var(--green); }
+  .tag-pwr    { background: #d2992222; color: var(--yellow); }
+  .tag-wake   { background: #ff555522; color: var(--red); }
+  .tag-touch  { background: #f7816622; color: var(--orange); }
+  .tag-pwm    { background: #bc8cff22; color: var(--purple); }
+
+  /* ── Alert / Note boxes ─────────────────── */
+  .alert {
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    border: 1px solid;
+  }
+  .alert-red    { background: #ff555510; border-color: #ff555540; color: #ff9999; }
+  .alert-yellow { background: #d2992210; border-color: #d2992240; color: #e8c57a; }
+  .alert-blue   { background: #1e82ff10; border-color: #1e82ff40; color: #7ab8ff; }
+  .alert strong { font-weight: 700; }
+  .alert code {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    background: #ffffff14;
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  /* ── Footer ──────────────────────────────── */
+  .footer {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-family: var(--mono);
+    line-height: 1.8;
+  }
+  .footer span { color: var(--blue); }
+
+  /* ── Divider ─────────────────────────────── */
+  hr { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <h1>WatchDog 2.4</h1>
-  <p>WIRING SCHEMATIC · ESP32 + nRF24L01 + ILI9341 TFT · v3.1 ENGINEERING HARDENED</p>
-</div>
-
-<div class="schematic-container">
-<svg viewBox="0 0 1060 620" xmlns="http://www.w3.org/2000/svg" font-family="'Share Tech Mono', monospace">
-  <defs>
-    <!-- Grid background -->
-    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#1a2035" stroke-width="0.5"/>
-    </pattern>
-    <!-- Glow filters -->
-    <filter id="glow-blue">
-      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
-      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <filter id="glow-orange">
-      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <filter id="glow-green">
-      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <!-- Arrow markers -->
-    <marker id="arr-blue" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-      <path d="M0,0 L6,3 L0,6 Z" fill="#1e82ff"/>
-    </marker>
-    <marker id="arr-orange" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-      <path d="M0,0 L6,3 L0,6 Z" fill="#ff8c00"/>
-    </marker>
-    <marker id="arr-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-      <path d="M0,0 L6,3 L0,6 Z" fill="#22cc66"/>
-    </marker>
-    <marker id="arr-red" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-      <path d="M0,0 L6,3 L0,6 Z" fill="#cc3333"/>
-    </marker>
-    <marker id="arr-yellow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-      <path d="M0,0 L6,3 L0,6 Z" fill="#ddaa00"/>
-    </marker>
-  </defs>
-
-  <!-- Background -->
-  <rect width="1060" height="620" fill="#0d1117"/>
-  <rect width="1060" height="620" fill="url(#grid)"/>
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- ESP32 MODULE — Centre                  -->
-  <!-- ═══════════════════════════════════════ -->
-  <rect x="390" y="210" width="140" height="220" rx="6" fill="#111827" stroke="#1e82ff" stroke-width="1.5" filter="url(#glow-blue)"/>
-  <rect x="390" y="210" width="140" height="22" rx="4" fill="#1e3a6e"/>
-  <text x="460" y="226" text-anchor="middle" font-size="10" fill="#1e82ff" font-weight="bold" letter-spacing="1">ESP32 DevKit</text>
-  <text x="460" y="244" text-anchor="middle" font-size="8" fill="#5a7aaa">Core 1 — Main Loop</text>
-  <text x="460" y="255" text-anchor="middle" font-size="8" fill="#5a7aaa">Core 0 — BLE Stack</text>
-
-  <!-- ESP32 Left pins -->
-  <g fill="#7aaabb" font-size="8">
-    <text x="464" y="272" text-anchor="middle">GPIO18 SCK</text>
-    <text x="464" y="285" text-anchor="middle">GPIO23 MOSI</text>
-    <text x="464" y="298" text-anchor="middle">GPIO19 MISO</text>
-    <text x="464" y="313" text-anchor="middle">GPIO5  TFT_CS</text>
-    <text x="464" y="326" text-anchor="middle">GPIO32 TFT_DC</text>
-    <text x="464" y="339" text-anchor="middle">GPIO33 TFT_RST</text>
-    <text x="464" y="352" text-anchor="middle">GPIO27 BL_PWM</text>
-    <text x="464" y="367" text-anchor="middle">GPIO13 T_CS</text>
-    <text x="464" y="380" text-anchor="middle">GPIO4  T_IRQ/WAKE</text>
-    <text x="464" y="395" text-anchor="middle">GPIO22 RF_CE</text>
-    <text x="464" y="408" text-anchor="middle">GPIO21 RF_CSN</text>
-    <text x="464" y="421" text-anchor="middle">GPIO26 BUZZER</text>
-  </g>
-
-  <!-- Pin dots left -->
-  <g fill="#1e82ff">
-    <circle cx="391" cy="269" r="3"/><circle cx="391" cy="282" r="3"/><circle cx="391" cy="295" r="3"/>
-    <circle cx="391" cy="310" r="3"/><circle cx="391" cy="323" r="3"/><circle cx="391" cy="336" r="3"/>
-    <circle cx="391" cy="349" r="3"/><circle cx="391" cy="364" r="3"/><circle cx="391" cy="377" r="3"/>
-    <circle cx="391" cy="392" r="3"/><circle cx="391" cy="405" r="3"/><circle cx="391" cy="418" r="3"/>
-  </g>
-  <!-- Pin dots right -->
-  <g fill="#ff8c00">
-    <circle cx="529" cy="269" r="3"/><circle cx="529" cy="282" r="3"/><circle cx="529" cy="295" r="3"/>
-    <circle cx="529" cy="310" r="3"/><circle cx="529" cy="323" r="3"/><circle cx="529" cy="336" r="3"/>
-    <circle cx="529" cy="349" r="3"/>
-  </g>
-  <g fill="#22cc66">
-    <circle cx="529" cy="392" r="3"/><circle cx="529" cy="405" r="3"/>
-  </g>
-  <g fill="#cc3333">
-    <circle cx="529" cy="418" r="3"/>
-  </g>
-
-  <!-- Right pin labels -->
-  <g fill="#7aaabb" font-size="8" text-anchor="start">
-    <text x="534" y="272">3.3V</text>
-    <text x="534" y="285">3.3V</text>
-    <text x="534" y="298">GND</text>
-    <text x="534" y="313">GND</text>
-    <text x="534" y="326">VIN</text>
-    <text x="534" y="339">GND (common)</text>
-    <text x="534" y="352">3.3V (nRF24)</text>
-    <text x="534" y="367">(built-in WiFi)</text>
-    <text x="534" y="380">(built-in BLE)</text>
-    <text x="534" y="395">GPIO35 ADC (reserved)</text>
-    <text x="534" y="408">GPIO35</text>
-    <text x="534" y="421">GND</text>
-  </g>
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- nRF24L01+ — Top Left                   -->
-  <!-- ═══════════════════════════════════════ -->
-  <rect x="40" y="40" width="150" height="160" rx="6" fill="#111827" stroke="#22cc66" stroke-width="1.5" filter="url(#glow-green)"/>
-  <rect x="40" y="40" width="150" height="22" rx="4" fill="#0d2a1a"/>
-  <text x="115" y="56" text-anchor="middle" font-size="10" fill="#22cc66" font-weight="bold" letter-spacing="1">nRF24L01+</text>
-  <text x="115" y="73" text-anchor="middle" font-size="8" fill="#4a8a6a">PA/LNA Module</text>
-  <!-- nRF24 antenna symbol -->
-  <path d="M185,58 Q192,50 185,42" stroke="#22cc66" stroke-width="1.5" fill="none"/>
-  <path d="M188,60 Q198,50 188,40" stroke="#22cc66" stroke-width="1.2" fill="none"/>
-
-  <g fill="#7aaabb" font-size="8">
-    <text x="115" y="90" text-anchor="middle">VCC → 3.3V</text>
-    <text x="115" y="103" text-anchor="middle">GND → GND</text>
-    <text x="115" y="116" text-anchor="middle">CE  → GPIO22</text>
-    <text x="115" y="129" text-anchor="middle">CSN → GPIO21</text>
-    <text x="115" y="142" text-anchor="middle">SCK → GPIO18</text>
-    <text x="115" y="155" text-anchor="middle">MOSI→ GPIO23</text>
-    <text x="115" y="168" text-anchor="middle">MISO→ GPIO19</text>
-  </g>
-  <g fill="#22cc66" font-size="8">
-    <text x="115" y="188" text-anchor="middle">⚡ 100µF cap on VCC/GND</text>
-  </g>
-  <!-- Capacitor symbol -->
-  <rect x="76" y="191" width="78" height="14" rx="3" fill="#0d2a1a" stroke="#22cc6644"/>
-  <text x="115" y="202" text-anchor="middle" font-size="7" fill="#22cc66aa">MANDATORY DECOUPLING</text>
-
-  <!-- nRF24 pin dots -->
-  <g fill="#22cc66">
-    <circle cx="189" cy="87" r="3"/><circle cx="189" cy="100" r="3"/>
-    <circle cx="189" cy="113" r="3"/><circle cx="189" cy="126" r="3"/>
-    <circle cx="189" cy="139" r="3"/><circle cx="189" cy="152" r="3"/>
-    <circle cx="189" cy="165" r="3"/>
-  </g>
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- ILI9341 TFT — Top Right                -->
-  <!-- ═══════════════════════════════════════ -->
-  <rect x="680" y="40" width="175" height="185" rx="6" fill="#111827" stroke="#1e82ff" stroke-width="1.5" filter="url(#glow-blue)"/>
-  <rect x="680" y="40" width="175" height="22" rx="4" fill="#0d1e3a"/>
-  <text x="767" y="56" text-anchor="middle" font-size="10" fill="#1e82ff" font-weight="bold" letter-spacing="1">ILI9341 TFT</text>
-  <text x="767" y="73" text-anchor="middle" font-size="8" fill="#4a6aaa">320×240 + XPT2046 Touch</text>
-  <!-- Screen mini graphic -->
-  <rect x="714" y="77" width="106" height="68" rx="3" fill="#0a0f1a" stroke="#1e82ff44"/>
-  <rect x="718" y="81" width="98" height="60" rx="2" fill="#091520"/>
-  <text x="767" y="115" text-anchor="middle" font-size="9" fill="#1e82ff66">[ 320 × 240 ]</text>
-  <text x="767" y="127" text-anchor="middle" font-size="8" fill="#1e82ff44">Landscape Rotation 1</text>
-
-  <g fill="#7aaabb" font-size="8">
-    <text x="767" y="158" text-anchor="middle">CS   → GPIO5</text>
-    <text x="767" y="170" text-anchor="middle">DC   → GPIO32</text>
-    <text x="767" y="182" text-anchor="middle">RST  → GPIO33</text>
-    <text x="767" y="194" text-anchor="middle">BL   → GPIO27 (PWM)</text>
-    <text x="767" y="207" text-anchor="middle">T_CS → GPIO13</text>
-    <text x="767" y="218" text-anchor="middle">T_IRQ→ GPIO4 (WAKE!)</text>
-  </g>
-  <!-- TFT pin dots -->
-  <g fill="#1e82ff">
-    <circle cx="681" cy="155" r="3"/><circle cx="681" cy="167" r="3"/>
-    <circle cx="681" cy="179" r="3"/><circle cx="681" cy="191" r="3"/>
-    <circle cx="681" cy="204" r="3"/><circle cx="681" cy="215" r="3"/>
-  </g>
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- TP4056 — Bottom Left                   -->
-  <!-- ═══════════════════════════════════════ -->
-  <rect x="40" y="430" width="155" height="150" rx="6" fill="#111827" stroke="#ddaa00" stroke-width="1.5" filter="url(#glow-orange)"/>
-  <rect x="40" y="430" width="155" height="22" rx="4" fill="#2a1f00"/>
-  <text x="117" y="446" text-anchor="middle" font-size="10" fill="#ddaa00" font-weight="bold" letter-spacing="1">TP4056</text>
-  <text x="117" y="463" text-anchor="middle" font-size="8" fill="#8a7030">LiPo Charge Module</text>
-
-  <g fill="#7aaabb" font-size="8">
-    <text x="117" y="480" text-anchor="middle">USB-C IN → charge input</text>
-    <text x="117" y="493" text-anchor="middle">BAT+ → LiPo (+) red</text>
-    <text x="117" y="506" text-anchor="middle">BAT- → LiPo (-) blk</text>
-    <text x="117" y="519" text-anchor="middle">OUT+ → Switch → VIN</text>
-    <text x="117" y="532" text-anchor="middle">OUT- → GND</text>
-  </g>
-  <!-- LED indicators -->
-  <g font-size="7" fill="#8a7030">
-    <text x="117" y="550" text-anchor="middle">Red LED = Charging</text>
-    <text x="117" y="562" text-anchor="middle">Blue LED = Complete</text>
-  </g>
-  <circle cx="95" cy="571" r="5" fill="#cc0000" opacity="0.8"/>
-  <circle cx="140" cy="571" r="5" fill="#0066cc" opacity="0.8"/>
-
-  <!-- TP4056 pin dots -->
-  <g fill="#ddaa00">
-    <circle cx="194" cy="477" r="3"/><circle cx="194" cy="490" r="3"/>
-    <circle cx="194" cy="503" r="3"/><circle cx="194" cy="516" r="3"/>
-    <circle cx="194" cy="529" r="3"/>
-  </g>
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- LiPo Battery — Bottom Center           -->
-  <!-- ═══════════════════════════════════════ -->
-  <rect x="350" y="490" width="130" height="90" rx="6" fill="#111827" stroke="#cc3333" stroke-width="1.5"/>
-  <rect x="350" y="490" width="130" height="22" rx="4" fill="#2a0a0a"/>
-  <text x="415" y="506" text-anchor="middle" font-size="10" fill="#cc3333" font-weight="bold">LiPo Battery</text>
-  <text x="415" y="522" text-anchor="middle" font-size="8" fill="#8a4040">3.7V · 1000–2000mAh</text>
-  <text x="415" y="535" text-anchor="middle" font-size="8" fill="#8a4040">(+) Red → TP4056 BAT+</text>
-  <text x="415" y="548" text-anchor="middle" font-size="8" fill="#8a4040">(-) Blk → TP4056 BAT-</text>
-  <!-- Battery symbol -->
-  <rect x="388" y="557" width="54" height="16" rx="3" fill="#1a0808" stroke="#cc333366"/>
-  <rect x="396" y="560" width="10" height="10" rx="1" fill="#cc3333" opacity="0.7"/>
-  <rect x="410" y="560" width="10" height="10" rx="1" fill="#cc3333" opacity="0.5"/>
-  <rect x="424" y="560" width="10" height="10" rx="1" fill="#cc3333" opacity="0.3"/>
-  <text x="445" y="569" font-size="7" fill="#cc3333">+</text>
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- Buzzer — Bottom Right                  -->
-  <!-- ═══════════════════════════════════════ -->
-  <rect x="730" y="440" width="130" height="100" rx="6" fill="#111827" stroke="#cc44cc" stroke-width="1.5"/>
-  <rect x="730" y="440" width="130" height="22" rx="4" fill="#1a0a2a"/>
-  <text x="795" y="456" text-anchor="middle" font-size="10" fill="#cc44cc" font-weight="bold">Passive Buzzer</text>
-  <text x="795" y="472" text-anchor="middle" font-size="8" fill="#7a4a8a">3.3V · tone() driven</text>
-  <!-- Buzzer symbol -->
-  <circle cx="795" cy="499" r="16" fill="#1a0a2a" stroke="#cc44cc44"/>
-  <circle cx="795" cy="499" r="8" fill="#2a0a4a" stroke="#cc44cc"/>
-  <circle cx="795" cy="499" r="3" fill="#cc44cc" opacity="0.8"/>
-  <path d="M773,499 Q768,495 773,491" stroke="#cc44cc" stroke-width="1" fill="none"/>
-  <path d="M817,499 Q822,495 817,491" stroke="#cc44cc" stroke-width="1" fill="none"/>
-
-  <g fill="#7aaabb" font-size="8">
-    <text x="795" y="526" text-anchor="middle">SIG → GPIO26</text>
-    <text x="795" y="538" text-anchor="middle">VCC → 3.3V</text>
-    <text x="795" y="550" text-anchor="middle">GND → GND</text>
-  </g>
-  <!-- Buzzer pin dots -->
-  <g fill="#cc44cc">
-    <circle cx="731" cy="523" r="3"/><circle cx="731" cy="535" r="3"/>
-    <circle cx="731" cy="547" r="3"/>
-  </g>
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- Slide Switch                            -->
-  <!-- ═══════════════════════════════════════ -->
-  <rect x="560" y="490" width="110" height="70" rx="6" fill="#111827" stroke="#ddaa00" stroke-width="1"/>
-  <text x="615" y="508" text-anchor="middle" font-size="9" fill="#ddaa00" font-weight="bold">Slide Switch</text>
-  <rect x="576" y="514" width="78" height="16" rx="8" fill="#1a1000" stroke="#ddaa0066"/>
-  <rect x="592" y="516" width="28" height="12" rx="6" fill="#ddaa00" opacity="0.8"/>
-  <text x="615" y="543" text-anchor="middle" font-size="8" fill="#8a7030">OUT+ → IN</text>
-  <text x="615" y="555" text-anchor="middle" font-size="8" fill="#8a7030">OUT  → ESP32 VIN</text>
-  <circle cx="561" cy="505" r="3" fill="#ddaa00"/>
-  <circle cx="561" cy="520" r="3" fill="#ddaa00"/>
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- SPI BUS LABEL — Centre top             -->
-  <!-- ═══════════════════════════════════════ -->
-  <rect x="380" y="110" width="180" height="70" rx="4" fill="#0d1520" stroke="#1e82ff33" stroke-dasharray="4,3"/>
-  <text x="470" y="128" text-anchor="middle" font-size="9" fill="#5a7aaa" letter-spacing="1">SHARED SPI BUS</text>
-  <text x="470" y="143" text-anchor="middle" font-size="8" fill="#3a5a7a">SCK  = GPIO18</text>
-  <text x="470" y="155" text-anchor="middle" font-size="8" fill="#3a5a7a">MOSI = GPIO23</text>
-  <text x="470" y="167" text-anchor="middle" font-size="8" fill="#3a5a7a">MISO = GPIO19</text>
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- WIRES — SPI to nRF24                   -->
-  <!-- ═══════════════════════════════════════ -->
-  <!-- SCK: ESP32 left → nRF24 right via top -->
-  <path d="M391,269 H310 V87 H189" stroke="#1e82ff" stroke-width="1.5" fill="none" stroke-dasharray="none" marker-end="url(#arr-blue)"/>
-  <!-- MOSI -->
-  <path d="M391,282 H298 V100 H189" stroke="#1e82ff" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
-  <!-- MISO -->
-  <path d="M391,295 H286 V113 H189" stroke="#1e82ff" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
-  <!-- CE GPIO22 -->
-  <path d="M391,392 H286 V126 H189" stroke="#22cc66" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
-  <!-- CSN GPIO21 -->
-  <path d="M391,405 H274 V139 H189" stroke="#22cc66" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- WIRES — SPI to TFT                     -->
-  <!-- ═══════════════════════════════════════ -->
-  <!-- SCK to TFT (shared) label line only -->
-  <path d="M529,269 H620 V87 Q650,87 681,155" stroke="#1e82ff" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
-  <!-- TFT CS GPIO5 -->
-  <path d="M529,310 H620 V167 Q650,167 681,167" stroke="#1e82ff" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
-  <!-- TFT DC GPIO32 -->
-  <path d="M529,323 H640 V179 Q660,179 681,179" stroke="#1e82ff" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
-  <!-- TFT RST GPIO33 -->
-  <path d="M529,336 H650 V191 Q665,191 681,191" stroke="#1e82ff" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
-  <!-- BL PWM GPIO27 -->
-  <path d="M529,349 H660 V204 Q670,204 681,204" stroke="#ddaa00" stroke-width="1.5" fill="none" marker-end="url(#arr-yellow)"/>
-  <!-- T_CS GPIO13 -->
-  <path d="M529,364 H670 V215 Q675,215 681,215" stroke="#ff8c00" stroke-width="1.5" fill="none" marker-end="url(#arr-orange)"/>
-  <!-- T_IRQ GPIO4 (special — deep sleep wakeup) -->
-  <path d="M529,377 H665 V228 Q678,228 681,228" stroke="#ff5555" stroke-width="2" fill="none" stroke-dasharray="6,2" marker-end="url(#arr-red)"/>
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- WIRES — Buzzer                         -->
-  <!-- ═══════════════════════════════════════ -->
-  <path d="M529,418 H660 V523 H731" stroke="#cc44cc" stroke-width="1.5" fill="none" marker-end="url(#arr-orange)"/>
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- WIRES — Power                          -->
-  <!-- ═══════════════════════════════════════ -->
-  <!-- TP4056 OUT+ to Switch -->
-  <path d="M194,516 H350 V505 H561" stroke="#ddaa00" stroke-width="2" fill="none" marker-end="url(#arr-yellow)"/>
-  <!-- Switch to ESP32 VIN -->
-  <path d="M561,520 H555 V326 Q542,326 529,326" stroke="#ddaa00" stroke-width="2" fill="none" marker-end="url(#arr-yellow)"/>
-  <!-- ESP32 3.3V to nRF24 VCC -->
-  <path d="M529,269 H620 V152 H189" stroke="#22cc66" stroke-width="1.5" fill="none" stroke-dasharray="5,2" opacity="0.6"/>
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- GND Rail                               -->
-  <!-- ═══════════════════════════════════════ -->
-  <line x1="40" y1="600" x2="870" y2="600" stroke="#333a4a" stroke-width="1.5" stroke-dasharray="8,4"/>
-  <text x="454" y="616" text-anchor="middle" font-size="7" fill="#334" letter-spacing="2">— — — COMMON GND RAIL — — —</text>
-  <g fill="#334a5a" font-size="7">
-    <text x="115" y="612">TP4056</text>
-    <text x="265" y="612">nRF24</text>
-    <text x="390" y="612">ESP32</text>
-    <text x="490" y="612">LiPo(-)</text>
-    <text x="767" y="612">TFT</text>
-    <text x="795" y="612">BZR</text>
-  </g>
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- ANNOTATIONS                            -->
-  <!-- ═══════════════════════════════════════ -->
-  <!-- T_IRQ warning -->
-  <rect x="590" y="260" width="145" height="36" rx="3" fill="#2a0808" stroke="#ff5555aa"/>
-  <text x="663" y="275" text-anchor="middle" font-size="8" fill="#ff8888">⚡ GPIO4 = T_IRQ</text>
-  <text x="663" y="288" text-anchor="middle" font-size="8" fill="#ff5555">+ Deep Sleep WAKEUP</text>
-
-  <!-- SPI sharing note -->
-  <rect x="210" y="175" width="160" height="28" rx="3" fill="#0d1520" stroke="#1e82ff44"/>
-  <text x="290" y="189" text-anchor="middle" font-size="7.5" fill="#5a8aaa">SCK/MOSI/MISO shared by</text>
-  <text x="290" y="200" text-anchor="middle" font-size="7.5" fill="#5a8aaa">TFT + nRF24 + Touch (CS isolates)</text>
-
-  <!-- Title bar -->
-  <rect x="0" y="0" width="1060" height="30" fill="#050810"/>
-  <text x="530" y="20" text-anchor="middle" font-size="11" fill="#1e82ff" letter-spacing="3" font-weight="bold">WATCHDOG 2.4 · WIRING SCHEMATIC · v3.1 ENGINEERING HARDENED · GPIO MAP</text>
-
-</svg>
-</div>
-
-<div class="legend">
-  <div class="legend-item">
-    <div class="legend-dot" style="background:#1e82ff"></div>
-    <div class="legend-text"><strong>SPI Data Bus</strong>GPIO18 SCK / GPIO23 MOSI / GPIO19 MISO · shared by all three SPI devices</div>
-  </div>
-  <div class="legend-item">
-    <div class="legend-dot" style="background:#22cc66"></div>
-    <div class="legend-text"><strong>nRF24L01 Control</strong>GPIO22 CE · GPIO21 CSN · 3.3V power from ESP32 LDO</div>
-  </div>
-  <div class="legend-item">
-    <div class="legend-dot" style="background:#ddaa00"></div>
-    <div class="legend-text"><strong>Power / Backlight</strong>TP4056 OUT+ → Switch → ESP32 VIN · GPIO27 BL_PWM (LEDC)</div>
-  </div>
-  <div class="legend-item">
-    <div class="legend-dot" style="background:#ff5555"></div>
-    <div class="legend-text"><strong>GPIO4 — Dual Role</strong>XPT2046 T_IRQ during operation · ext0 deep sleep WAKEUP source (v3.1)</div>
-  </div>
-  <div class="legend-item">
-    <div class="legend-dot" style="background:#ff8c00"></div>
-    <div class="legend-text"><strong>Touch CS / TFT Pins</strong>GPIO13 T_CS · GPIO5 TFT_CS · GPIO32 DC · GPIO33 RST</div>
-  </div>
-  <div class="legend-item">
-    <div class="legend-dot" style="background:#cc44cc"></div>
-    <div class="legend-text"><strong>Buzzer</strong>GPIO26 signal · passive buzzer · tone() / noTone() driven</div>
+<!-- ── PAGE HEADER ──────────────────────────── -->
+<div class="page-header">
+  <h1>WATCHDOG 2.4</h1>
+  <p>WIRING REFERENCE · GPIO MAP · CONNECTION GUIDE</p>
+  <div class="badge-row">
+    <span class="badge badge-blue">ESP32 DevKit v1</span>
+    <span class="badge badge-green">nRF24L01+ PA/LNA</span>
+    <span class="badge badge-blue">ILI9341 TFT + XPT2046</span>
+    <span class="badge badge-yellow">v3.1 ENGINEERING HARDENED</span>
   </div>
 </div>
 
-<div class="note">
-  <strong>⚠ CRITICAL:</strong> Always place a 100µF electrolytic capacitor directly across the nRF24L01 VCC and GND pins. Omitting this causes missed detections, false positives, and random ESP32 resets due to supply voltage droop during radio state transitions. &nbsp;|&nbsp;
-  <strong>Power:</strong> nRF24L01 must be powered from ESP32 3.3V rail (LDO regulated) — never directly from TP4056 OUT+ (4.2V at full charge will damage the module). &nbsp;|&nbsp;
-  <strong>GPIO4:</strong> In v3.1, this pin serves dual purpose — XPT2046 touch interrupt during normal operation AND the esp_sleep_enable_ext0_wakeup source for deep sleep recovery on touch.
+<!-- ── BLOCK DIAGRAM ────────────────────────── -->
+<div class="block-diagram">
+  <h2>System Overview</h2>
+  <div class="diagram-grid">
+
+    <div class="block b-rf">
+      <div class="block-label label-rf">nRF24L01+</div>
+      <div class="block-sub">PA/LNA Module<br>2.4 GHz RF Scanner</div>
+    </div>
+
+    <div style="font-size:0.7rem; color:var(--muted); font-family:var(--mono); text-align:center; line-height:2;">
+      SPI (SCK/MOSI/MISO)<br>
+      ←──────────────────→<br>
+      CE · CSN · VCC · GND
+    </div>
+
+    <div class="block b-tft">
+      <div class="block-label label-tft">ILI9341 TFT</div>
+      <div class="block-sub">320×240 Display<br>+ XPT2046 Touch</div>
+    </div>
+
+    <div style="font-size:0.7rem; color:var(--muted); font-family:var(--mono); text-align:center; line-height:2;">
+      CE · CSN<br>↑↑<br>GPIO22 · GPIO21
+    </div>
+
+    <div class="block b-esp esp-center">
+      <div class="block-label label-esp">ESP32 DevKit</div>
+      <div class="block-sub">240 MHz Dual-Core<br>Core 1: Main Loop<br>Core 0: BLE Stack</div>
+    </div>
+
+    <div style="font-size:0.7rem; color:var(--muted); font-family:var(--mono); text-align:center; line-height:2;">
+      CS · DC · RST · BL<br>↑↑↑↑<br>GPIO5 · 32 · 33 · 27
+    </div>
+
+    <div class="block b-pwr">
+      <div class="block-label label-pwr">TP4056</div>
+      <div class="block-sub">LiPo Charge Module<br>USB-C Input</div>
+    </div>
+
+    <div style="font-size:0.7rem; color:var(--muted); font-family:var(--mono); text-align:center; line-height:2;">
+      OUT+ → Switch → VIN<br>3.3V → nRF24 VCC<br>GND (common)
+    </div>
+
+    <div class="block b-buzz">
+      <div class="block-label label-buzz">Buzzer + LiPo</div>
+      <div class="block-sub">GPIO26 Signal<br>3.7V 1000–2000mAh</div>
+    </div>
+
+    <div class="spi-note">
+      <span>SHARED SPI BUS:</span> &nbsp;SCK = GPIO18 &nbsp;·&nbsp; MOSI = GPIO23 &nbsp;·&nbsp; MISO = GPIO19
+      &nbsp;&nbsp;—&nbsp;&nbsp; All three devices (nRF24 / TFT / Touch) share these lines. Chip Select (CS) isolates them.
+    </div>
+
+  </div>
+</div>
+
+<!-- ── CRITICAL ALERTS ──────────────────────── -->
+<div class="alert alert-red">
+  <strong>⚠ CRITICAL — nRF24L01 Power:</strong> Always place a <strong>100µF electrolytic capacitor</strong> directly across VCC and GND on the nRF24 module, as close to the module as possible. Omitting it causes missed detections, false positives, and random ESP32 resets.
+</div>
+<div class="alert alert-yellow">
+  <strong>⚠ POWER RAIL:</strong> The nRF24L01 must be powered from the <strong>ESP32 3.3V LDO rail</strong> — never directly from TP4056 OUT+ (which reaches 4.2V at full charge and will damage the module).
+</div>
+<div class="alert alert-blue">
+  <strong>ℹ GPIO4 — DUAL ROLE (v3.1):</strong> GPIO4 serves as the XPT2046 <code>T_IRQ</code> touch interrupt during normal operation AND as the <code>ext0</code> deep sleep wakeup source. A tap on the screen wakes the device without a power cycle.
+</div>
+
+<hr>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SECTION 1 — SPI BUS                       -->
+<!-- ══════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-dot" style="background:var(--blue)"></div>
+    <h2 style="color:var(--blue)">SPI Bus — Shared by all 3 devices</h2>
+    <span>GPIO18 · GPIO23 · GPIO19</span>
+  </div>
+  <table class="pin-table">
+    <thead>
+      <tr>
+        <th>ESP32 GPIO</th>
+        <th>Signal</th>
+        <th>Connects To</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="gpio">GPIO18</td>
+        <td class="pin">SCK <span class="tag tag-spi">SPI</span></td>
+        <td class="dest">nRF24 SCK · TFT SCK · Touch T_CLK</td>
+        <td class="note-cell">All three share this clock line</td>
+      </tr>
+      <tr>
+        <td class="gpio">GPIO23</td>
+        <td class="pin">MOSI <span class="tag tag-spi">SPI</span></td>
+        <td class="dest">nRF24 MOSI · TFT MOSI · Touch T_DIN</td>
+        <td class="note-cell">Master Out, Slave In</td>
+      </tr>
+      <tr>
+        <td class="gpio">GPIO19</td>
+        <td class="pin">MISO <span class="tag tag-spi">SPI</span></td>
+        <td class="dest">nRF24 MISO · TFT MISO · Touch T_OUT</td>
+        <td class="note-cell">Master In, Slave Out</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SECTION 2 — nRF24L01                      -->
+<!-- ══════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-dot" style="background:var(--green)"></div>
+    <h2 style="color:var(--green)">nRF24L01+ PA/LNA</h2>
+    <span>RF Spectrum Scanner — 125 channels</span>
+  </div>
+  <table class="pin-table">
+    <thead>
+      <tr>
+        <th>nRF24 Pin</th>
+        <th>Connects To</th>
+        <th>Type</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="gpio">VCC</td>
+        <td class="pin">ESP32 3.3V rail</td>
+        <td><span class="tag tag-pwr">POWER</span></td>
+        <td class="note-cell">⚠ NOT from TP4056 OUT+. Add 100µF cap here.</td>
+      </tr>
+      <tr>
+        <td class="gpio">GND</td>
+        <td class="pin">Common GND</td>
+        <td><span class="tag tag-pwr">POWER</span></td>
+        <td class="note-cell">100µF cap across VCC–GND</td>
+      </tr>
+      <tr>
+        <td class="gpio">CE</td>
+        <td class="pin">GPIO22</td>
+        <td><span class="tag tag-ctrl">CTRL</span></td>
+        <td class="note-cell">Chip Enable — controls RX/TX mode</td>
+      </tr>
+      <tr>
+        <td class="gpio">CSN</td>
+        <td class="pin">GPIO21</td>
+        <td><span class="tag tag-ctrl">CTRL</span></td>
+        <td class="note-cell">Chip Select Not — SPI device select</td>
+      </tr>
+      <tr>
+        <td class="gpio">SCK</td>
+        <td class="pin">GPIO18</td>
+        <td><span class="tag tag-spi">SPI</span></td>
+        <td class="note-cell">Shared SPI clock</td>
+      </tr>
+      <tr>
+        <td class="gpio">MOSI</td>
+        <td class="pin">GPIO23</td>
+        <td><span class="tag tag-spi">SPI</span></td>
+        <td class="note-cell">Shared SPI data out</td>
+      </tr>
+      <tr>
+        <td class="gpio">MISO</td>
+        <td class="pin">GPIO19</td>
+        <td><span class="tag tag-spi">SPI</span></td>
+        <td class="note-cell">Shared SPI data in</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SECTION 3 — ILI9341 TFT                   -->
+<!-- ══════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-dot" style="background:var(--blue)"></div>
+    <h2 style="color:var(--blue)">ILI9341 TFT Display</h2>
+    <span>320×240 SPI display · Landscape rotation 1</span>
+  </div>
+  <table class="pin-table">
+    <thead>
+      <tr>
+        <th>TFT Pin</th>
+        <th>Connects To</th>
+        <th>Type</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="gpio">CS</td>
+        <td class="pin">GPIO5</td>
+        <td><span class="tag tag-ctrl">CTRL</span></td>
+        <td class="note-cell">TFT Chip Select — active LOW</td>
+      </tr>
+      <tr>
+        <td class="gpio">DC</td>
+        <td class="pin">GPIO32</td>
+        <td><span class="tag tag-ctrl">CTRL</span></td>
+        <td class="note-cell">Data / Command select</td>
+      </tr>
+      <tr>
+        <td class="gpio">RST</td>
+        <td class="pin">GPIO33</td>
+        <td><span class="tag tag-ctrl">CTRL</span></td>
+        <td class="note-cell">Hardware reset — pulled LOW 80ms on boot</td>
+      </tr>
+      <tr>
+        <td class="gpio">BL</td>
+        <td class="pin">GPIO27</td>
+        <td><span class="tag tag-pwm">PWM</span></td>
+        <td class="note-cell">Backlight — LEDC PWM, 0–255 brightness</td>
+      </tr>
+      <tr>
+        <td class="gpio">SCK</td>
+        <td class="pin">GPIO18</td>
+        <td><span class="tag tag-spi">SPI</span></td>
+        <td class="note-cell">Shared SPI clock</td>
+      </tr>
+      <tr>
+        <td class="gpio">MOSI</td>
+        <td class="pin">GPIO23</td>
+        <td><span class="tag tag-spi">SPI</span></td>
+        <td class="note-cell">Shared SPI data out</td>
+      </tr>
+      <tr>
+        <td class="gpio">VCC / GND</td>
+        <td class="pin">3.3V / GND</td>
+        <td><span class="tag tag-pwr">POWER</span></td>
+        <td class="note-cell">3.3V from ESP32 LDO</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SECTION 4 — XPT2046 Touch                 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-dot" style="background:var(--orange)"></div>
+    <h2 style="color:var(--orange)">XPT2046 Touch Controller</h2>
+    <span>Onboard the TFT module · Resistive touch</span>
+  </div>
+  <table class="pin-table">
+    <thead>
+      <tr>
+        <th>Touch Pin</th>
+        <th>Connects To</th>
+        <th>Type</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="gpio">T_CS</td>
+        <td class="pin">GPIO13</td>
+        <td><span class="tag tag-touch">TOUCH</span></td>
+        <td class="note-cell">Touch Chip Select — separate from TFT CS</td>
+      </tr>
+      <tr>
+        <td class="gpio">T_IRQ</td>
+        <td class="pin">GPIO4</td>
+        <td><span class="tag tag-wake">WAKE</span></td>
+        <td class="note-cell">⚡ Dual role: touch interrupt + deep sleep wakeup</td>
+      </tr>
+      <tr>
+        <td class="gpio">T_CLK</td>
+        <td class="pin">GPIO18</td>
+        <td><span class="tag tag-spi">SPI</span></td>
+        <td class="note-cell">Shared SPI clock</td>
+      </tr>
+      <tr>
+        <td class="gpio">T_DIN</td>
+        <td class="pin">GPIO23</td>
+        <td><span class="tag tag-spi">SPI</span></td>
+        <td class="note-cell">Shared SPI MOSI</td>
+      </tr>
+      <tr>
+        <td class="gpio">T_OUT</td>
+        <td class="pin">GPIO19</td>
+        <td><span class="tag tag-spi">SPI</span></td>
+        <td class="note-cell">Shared SPI MISO</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SECTION 5 — Power                         -->
+<!-- ══════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-dot" style="background:var(--yellow)"></div>
+    <h2 style="color:var(--yellow)">Power System — TP4056 + LiPo</h2>
+    <span>USB-C charging · LDO regulated output</span>
+  </div>
+  <table class="pin-table">
+    <thead>
+      <tr>
+        <th>Connection</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="gpio">Charge Input</td>
+        <td class="pin">USB-C port</td>
+        <td class="dest">TP4056 IN+ / IN−</td>
+        <td class="note-cell">5V USB charging input</td>
+      </tr>
+      <tr>
+        <td class="gpio">Cell (+)</td>
+        <td class="pin">LiPo red wire</td>
+        <td class="dest">TP4056 BAT+</td>
+        <td class="note-cell">3.7V cell positive</td>
+      </tr>
+      <tr>
+        <td class="gpio">Cell (−)</td>
+        <td class="pin">LiPo black wire</td>
+        <td class="dest">TP4056 BAT−</td>
+        <td class="note-cell">Cell negative</td>
+      </tr>
+      <tr>
+        <td class="gpio">Main Output</td>
+        <td class="pin">TP4056 OUT+</td>
+        <td class="dest">Slide Switch → ESP32 VIN</td>
+        <td class="note-cell">Switch controls power to whole circuit</td>
+      </tr>
+      <tr>
+        <td class="gpio">GND</td>
+        <td class="pin">TP4056 OUT−</td>
+        <td class="dest">Common GND rail</td>
+        <td class="note-cell">ESP32 · nRF24 · TFT · Buzzer all share GND</td>
+      </tr>
+      <tr>
+        <td class="gpio">nRF24 Power</td>
+        <td class="pin">ESP32 3.3V pin</td>
+        <td class="dest">nRF24 VCC + 100µF cap</td>
+        <td class="note-cell">⚠ Must come from 3.3V LDO, not OUT+</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SECTION 6 — Buzzer                        -->
+<!-- ══════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-dot" style="background:var(--purple)"></div>
+    <h2 style="color:var(--purple)">Passive Buzzer</h2>
+    <span>GPIO26 · tone() / noTone() driven</span>
+  </div>
+  <table class="pin-table">
+    <thead>
+      <tr>
+        <th>Buzzer Pin</th>
+        <th>Connects To</th>
+        <th>Type</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="gpio">Signal</td>
+        <td class="pin">GPIO26</td>
+        <td><span class="tag tag-pwm">PWM</span></td>
+        <td class="note-cell">Arduino tone() uses hardware timer — any frequency</td>
+      </tr>
+      <tr>
+        <td class="gpio">VCC</td>
+        <td class="pin">3.3V</td>
+        <td><span class="tag tag-pwr">POWER</span></td>
+        <td class="note-cell">Must be passive buzzer — NOT active</td>
+      </tr>
+      <tr>
+        <td class="gpio">GND</td>
+        <td class="pin">Common GND</td>
+        <td><span class="tag tag-pwr">POWER</span></td>
+        <td class="note-cell"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<hr>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- FULL PIN SUMMARY                          -->
+<!-- ══════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-dot" style="background:var(--muted)"></div>
+    <h2 style="color:var(--text)">Complete GPIO Summary</h2>
+    <span>All pins at a glance</span>
+  </div>
+  <table class="pin-table">
+    <thead>
+      <tr>
+        <th>GPIO</th>
+        <th>Signal</th>
+        <th>Device</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="gpio">GPIO4</td>  <td>T_IRQ / WAKE</td> <td class="dest">XPT2046 Touch · Deep Sleep</td> <td class="note-cell"><span class="tag tag-wake">DUAL ROLE</span> touch IRQ + wakeup</td></tr>
+      <tr><td class="gpio">GPIO5</td>  <td>TFT_CS</td>       <td class="dest">ILI9341 TFT</td>               <td class="note-cell">TFT chip select</td></tr>
+      <tr><td class="gpio">GPIO13</td> <td>T_CS</td>         <td class="dest">XPT2046 Touch</td>             <td class="note-cell">Touch chip select</td></tr>
+      <tr><td class="gpio">GPIO18</td> <td>SCK</td>          <td class="dest">SPI Bus (shared)</td>          <td class="note-cell"><span class="tag tag-spi">SPI</span> all 3 devices</td></tr>
+      <tr><td class="gpio">GPIO19</td> <td>MISO</td>         <td class="dest">SPI Bus (shared)</td>          <td class="note-cell"><span class="tag tag-spi">SPI</span> all 3 devices</td></tr>
+      <tr><td class="gpio">GPIO21</td> <td>RF_CSN</td>       <td class="dest">nRF24L01</td>                  <td class="note-cell">Radio chip select</td></tr>
+      <tr><td class="gpio">GPIO22</td> <td>RF_CE</td>        <td class="dest">nRF24L01</td>                  <td class="note-cell">Radio chip enable</td></tr>
+      <tr><td class="gpio">GPIO23</td> <td>MOSI</td>         <td class="dest">SPI Bus (shared)</td>          <td class="note-cell"><span class="tag tag-spi">SPI</span> all 3 devices</td></tr>
+      <tr><td class="gpio">GPIO26</td> <td>BUZZER</td>       <td class="dest">Passive Buzzer</td>            <td class="note-cell">tone() signal output</td></tr>
+      <tr><td class="gpio">GPIO27</td> <td>BL_PWM</td>       <td class="dest">TFT Backlight</td>             <td class="note-cell"><span class="tag tag-pwm">PWM</span> LEDC 0–255</td></tr>
+      <tr><td class="gpio">GPIO32</td> <td>TFT_DC</td>       <td class="dest">ILI9341 TFT</td>               <td class="note-cell">Data/Command select</td></tr>
+      <tr><td class="gpio">GPIO33</td> <td>TFT_RST</td>      <td class="dest">ILI9341 TFT</td>               <td class="note-cell">Hardware reset</td></tr>
+      <tr><td class="gpio">GPIO35</td> <td>BAT_ADC</td>      <td class="dest">Battery voltage divider</td>   <td class="note-cell">ADC1_CH7 — reserved for v7.0</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ── FOOTER ────────────────────────────────── -->
+<div class="footer">
+  <span>WATCHDOG 2.4</span> · Wiring Reference · v3.1 Engineering Hardened<br>
+  ESP32 DevKit v1 · nRF24L01+ PA/LNA · ILI9341 320×240 · XPT2046 · TP4056<br>
+  Anirudh N.S. · Bengaluru, India · 2025
 </div>
 
 </body>
